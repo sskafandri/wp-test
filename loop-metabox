@@ -1,0 +1,25 @@
+//WP Loop Specific Metabox Value From All Post On Custom Post Type
+
+$args = array('post_type' => 'myposttype', 'meta_query' => array(
+        'relation' => 'AND',
+        array(
+            'key' => 'custommetabox_mb',
+            'value' => 'yiedpozi',
+            'compare' => '='
+        ),
+        array(
+            'key' => 'custommetabox_mbb',
+            'value' => 'yiedpozi',
+            'compare' => '='
+        )
+    ),  'posts_per_page' => -1,);
+
+$loop = new WP_Query($args); 
+while ( $loop->have_posts() ) : $loop->the_post();
+$custom_fields = get_post_custom($post->ID);
+$my_custom_field = $custom_fields['custommetabox_mb'];
+foreach ( $my_custom_field as $key => $value ) {
+    echo $value . "<br />";
+  }
+
+endwhile;
